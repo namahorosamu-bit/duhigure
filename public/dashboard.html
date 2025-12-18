@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - DUHIGURE MU MIRYANGO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root{
+            --primary:#2a5298;
+            --primary-dark:#1e3c72;
+            --accent:#4facfe;
+            --card-radius:12px;
+        }
+        body{background:#f4f6fb}
+        .navbar { background: linear-gradient(90deg,var(--primary) 0%,var(--primary-dark) 100%); }
+        .btn-primary{ background-color: var(--primary); border: none; }
+        .btn-primary:hover{ background-color: var(--primary-dark); }
+        .card{ border-radius: var(--card-radius); box-shadow: 0 6px 18px rgba(10,20,40,0.06); }
+        .card h5{ font-weight:600 }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="index.html">DUHIGURE MU MIRYANGO</a>
+        </div>
+    </nav>
+
+    <section class="py-5">
+        <div class="container">
+            <h2 class="mb-4 text-center">Family Dashboard</h2>
+            
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <div class="card p-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="mb-0">Family Members</h5>
+                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#addMemberModal">Add</button>
+                        </div>
+                        <ul class="list-group list-group-flush" id="membersList">
+                            <!-- JS will populate members -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card p-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="mb-0">Performance Duties</h5>
+                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#addDutyModal">Add</button>
+                        </div>
+                        <ul class="list-group list-group-flush" id="dutiesList">
+                            <!-- JS will populate duties -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Member Modal -->
+    <div class="modal fade" id="addMemberModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Family Member</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="memberForm" class="needs-validation" novalidate>
+                        <div class="mb-3">
+                            <label for="member_name" class="form-label">Name</label>
+                            <input id="member_name" type="text" class="form-control" name="name" required>
+                            <div class="invalid-feedback">Please enter the member's name.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="member_email" class="form-label">Email</label>
+                            <input id="member_email" type="email" class="form-control" name="email" required>
+                            <div class="invalid-feedback">Please provide a valid email address.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="member_phone" class="form-label">Phone</label>
+                            <input id="member_phone" type="text" class="form-control" name="phone" required>
+                            <div class="invalid-feedback">Please enter a phone number.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="member_relationship" class="form-label">Relationship</label>
+                            <input id="member_relationship" type="text" class="form-control" name="relationship" required>
+                            <div class="invalid-feedback">Please specify the relationship.</div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Save Member</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Duty Modal -->
+    <div class="modal fade" id="addDutyModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Performance Duty</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="dutyForm" class="needs-validation" novalidate>
+                        <div class="mb-3">
+                            <label for="duty_description" class="form-label">Duty Description</label>
+                            <input id="duty_description" type="text" class="form-control" name="duty" required>
+                            <div class="invalid-feedback">Please enter a duty description.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="duty_member_id" class="form-label">Assign To Member (optional)</label>
+                            <select id="duty_member_id" class="form-select" name="member_id">
+                                <option value="">All Family</option>
+                                <!-- JS will populate members -->
+                            </select>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Save Duty</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Placeholder JS for demonstration
+        const membersList = document.getElementById('membersList');
+        const dutiesList = document.getElementById('dutiesList');
+
+        const members = [
+            { name: 'John Doe', relationship: 'Father' },
+            { name: 'Jane Doe', relationship: 'Mother' },
+        ];
+
+        const duties = [
+            { duty: 'Plant Trees', member: 'All Family' },
+            { duty: 'Attend Meetings', member: 'John Doe' },
+        ];
+
+        members.forEach(m => {
+            const li = document.createElement('li');
+            li.className = 'list-group-item';
+            li.textContent = `${m.name} (${m.relationship})`;
+            membersList.appendChild(li);
+        });
+
+        duties.forEach(d => {
+            const li = document.createElement('li');
+            li.className = 'list-group-item';
+            li.textContent = `${d.duty} - ${d.member}`;
+            dutiesList.appendChild(li);
+        });
+
+        // Enable Bootstrap validation for forms on this page
+        (function () {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+</body>
+</html>
