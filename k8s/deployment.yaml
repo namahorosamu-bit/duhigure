@@ -14,7 +14,23 @@ spec:
     spec:
       containers:
         - name: duhigure
-          image: duhigure:production
-          imagePullPolicy: Never
+          # Replace image with your registry image (example below uses your GitHub username)
+          image: namahorosamu-bit/duhigure:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PORT
+              value: "3000"
           ports:
-            - containerPort: 8080
+            - containerPort: 3000
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 20
+            periodSeconds: 20

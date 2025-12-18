@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: duhigure-ingress
-  namespace: duhigure
+  namespace: default
 spec:
   ingressClassName: nginx
   rules:
